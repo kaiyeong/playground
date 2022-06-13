@@ -70,8 +70,7 @@ public class PrimeNumber {
 
         start = Instant.now();
         for(int j = 0; j < 1000; j++) {
-            PrimeNumber.nextPrimeNumber(j, false);
-            //System.out.println( j + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(j, false));
+            System.out.println( j + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(j, true));
         }
         System.out.println(Integer.MAX_VALUE + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(Integer.MAX_VALUE, true));
         end = Instant.now();
