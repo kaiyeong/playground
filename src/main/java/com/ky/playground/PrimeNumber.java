@@ -26,14 +26,18 @@ public class PrimeNumber {
                 .noneMatch(n -> (number % n == 0));
     }
 
-    public static boolean isPrimeNumber(int n) {
+    public static boolean isPrimeNumber(int n, boolean usingMathLib) {
         boolean isPrimeNumber = true;
 
         if(n == 0 || n == 1) {
             isPrimeNumber = false;
         } else {
-            //int sqrt = sqrtMath(n);
-            int sqrt = squareRoot(n);
+            int sqrt = 0;
+            if(usingMathLib) {
+                sqrt = sqrtMath(n);
+            } else {
+                sqrt = squareRoot(n);
+            }
             for(int i = 2; i < sqrt; i++) {
                 if((n % i) == 0) {
                     isPrimeNumber = false;
@@ -45,9 +49,9 @@ public class PrimeNumber {
         return isPrimeNumber;
     }
 
-    public static int nextPrimeNumber(int n) {
+    public static int nextPrimeNumber(int n,  boolean usingMathLib) {
         while(true) {
-            if(PrimeNumber.isPrimeNumber(n)) {
+            if(PrimeNumber.isPrimeNumber(n, usingMathLib)) {
                 return n;
             }
             n++;
@@ -57,11 +61,21 @@ public class PrimeNumber {
     public static void main(String[] args) {
         Instant start = Instant.now();
         for(int j = 0; j < 1000; j++) {
-            System.out.println( j + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(j));
+            System.out.println( j + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(j, false));
         }
-        System.out.println(Integer.MAX_VALUE + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(Integer.MAX_VALUE));
+        System.out.println(Integer.MAX_VALUE + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(Integer.MAX_VALUE, false));
         Instant end = Instant.now();
         System.out.println("total process time "+ Duration.between(start, end).toMillis() + "ms");
+
+
+        start = Instant.now();
+        for(int j = 0; j < 1000; j++) {
+            PrimeNumber.nextPrimeNumber(j, false);
+            //System.out.println( j + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(j, false));
+        }
+        System.out.println(Integer.MAX_VALUE + " nextPrimeNumber : " + PrimeNumber.nextPrimeNumber(Integer.MAX_VALUE, true));
+        end = Instant.now();
+        System.out.println("total process time using math lib "+ Duration.between(start, end).toMillis() + "ms");
     }
 }
 
